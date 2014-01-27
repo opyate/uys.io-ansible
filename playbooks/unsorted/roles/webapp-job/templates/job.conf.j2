@@ -1,0 +1,7 @@
+{% if app_mode != 'dev' %}
+%{{app_mode}}.reports.superadmin.senddaily=true
+%{{app_mode}}.application.runupdates=true
+{% else %}
+reports.superadmin.senddaily=true
+application.runupdates=true
+{% endif %}

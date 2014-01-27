@@ -1,0 +1,11 @@
+---
+- name: copy newrelic
+  copy: src=newrelic_agent3.2.0.zip dest={{installation_directory}}/newrelic.zip
+
+- name: extract newrelic
+  command: chdir={{installation_directory}} unzip -q newrelic.zip
+           creates={{installation_directory}}/newrelic
+ 
+- name: override newrelic agent configuration
+  template: src=newrelic.yml.j2 dest={{installation_directory}}/newrelic/newrelic.yml
+

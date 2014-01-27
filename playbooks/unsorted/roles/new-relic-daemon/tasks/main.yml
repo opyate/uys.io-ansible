@@ -1,0 +1,26 @@
+---
+- name: add newrelic repo
+  sudo: true
+  apt_repository: repo='deb http://apt.newrelic.com/debian/ newrelic non-free' state=present
+
+- name: add newrelic signing key
+  sudo: true
+  apt_key: id=548C16BF url=https://download.newrelic.com/548C16BF.gpg keyring=/etc/apt/trusted.gpg.d/newrelic.gpg state=present
+
+- name: update apt cache
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Install newrelic
+  sudo: yes
+  action: $ansible_pkg_mgr pkg={{item}} state=present
+  with_items:
+    - newrelic-sysmond
+
+
+# TODO find out where nrsysmond modifies files to write the license key so we can check it for Ansible idempotency
+- name: set newrelic license key
+  sudo: true
+  shell: creates={{installation_directory}}/ansible-markers/new-relic nrsysmond-config --set license_key={{newrelic_license_key}} && touch {{installation_directory}}/ansible-markers/new-relic
+  notify: restart newrelic
+

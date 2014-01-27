@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# can use argument from Ansible here...
+THE_PORT="{{app_http_port}}"
+if [[ "xTHE_PORT" == "x" ]] ; then
+  # no port
+  THE_HOST="127.0.0.1"
+else
+  THE_HOST="127.0.0.1:$THE_PORT"
+fi
+
+# curl's --retry won't work here (see http://curl.haxx.se/mail/archive-2010-05/0066.html)
+RETRIES=5
+SLEEP=1
+while (true) ; do
+  echo "Trying $RETRIES ..."
+  test $(curl --silent -w "%{http_code}" -X GET http://${THE_HOST}/home -o /dev/null) == 200
+  RESPONSE="$?"
+  if [[ "$RESPONSE" != "0" ]]; then
+    let RETRIES=RETRIES-1
+    if [[ "$RETRIES" != "0" ]]; then
+      let SLEEP=SLEEP*2
+      echo "Failed. Sleeping for $SLEEP seconds ..."
+      sleep $SLEEP
+    else
+      echo "Retries exhausted. Exiting..."
+      exit 2
+    fi
+  else
+    exit $RESPONSE
+  fi
+done

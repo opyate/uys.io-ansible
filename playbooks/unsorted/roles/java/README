@@ -1,0 +1,3 @@
+Basically replaces /etc/java-7-openjdk/security/java.security with a custom version which overcomes this problem:
+
+http://shickys.blogspot.co.uk/2012/11/addressing-openjdk-bug-with-ssl-on.html

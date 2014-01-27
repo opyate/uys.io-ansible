@@ -1,0 +1,24 @@
+---
+- name: Install nginx
+  action: $ansible_pkg_mgr pkg=nginx state=present
+
+- name: Ensure nginx log directory
+  sudo: true
+  file: path=/var/log/nginx/ state=directory
+
+- name: copy nginx site
+  sudo: true
+  template: src=app.j2 dest=/etc/nginx/sites-available/app
+
+- name: link nginx site
+  sudo: true
+  file: src=/etc/nginx/sites-available/app path=/etc/nginx/sites-enabled/app state=link
+
+- name: Copy nginx configuration
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: Start nginx
+  sudo: true
+  service: name=nginx state=started enabled=yes

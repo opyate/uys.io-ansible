@@ -1,0 +1,51 @@
+#Upstart script for a play application that binds to an unprivileged user.
+# put this into a file like /etc/init/playframework
+# you can then start/stop it using either initctl or start/stop/restart
+# e.g. 
+# start playframework
+# http://dominikdorn.com
+
+description     "The App"
+author          "Devops <Devops@example.org"
+version         "1.0"
+
+env PLAY_BINARY={{installation_directory}}/play/play
+env JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+env HOME={{installation_directory}}/play1app/latest
+env USER={{admin_user}}
+env GROUP={{admin_group}}
+env PROFILE={{app_mode}}
+
+start on (filesystem and net-device-up IFACE=lo) or runlevel [2345]
+stop on runlevel [!2345]
+
+limit nofile 65536 65536
+respawn
+respawn limit 10 5
+umask 022
+expect fork
+
+
+pre-start script
+        test -x $PLAY_BINARY || { stop; exit 0; }
+        test -c /dev/null || { stop; exit 0; }
+        chdir ${HOME}
+        rm ${HOME}/server.pid || true
+        {{installation_directory}}/configurer.sh
+end script
+
+pre-stop script
+        exec $PLAY_BINARY stop $HOME
+end script
+
+post-stop script
+        rm ${HOME}/server.pid || true
+end script
+
+script
+{% if has_newrelic_agent %}
+exec start-stop-daemon --start --exec $PLAY_BINARY --chuid $USER:$GROUP --chdir $HOME -- start $HOME -javaagent:{{installation_directory}}/newrelic/newrelic.jar --%$PROFILE -Dprecompiled=true --http.port={{app_http_port}} --https.port={{app_https_port}}
+{% else %}
+exec start-stop-daemon --start --exec $PLAY_BINARY --chuid $USER:$GROUP --chdir $HOME -- start $HOME --%$PROFILE -Dprecompiled=true --http.port={{app_http_port}} --https.port={{app_https_port}}
+{% endif %}
+end script

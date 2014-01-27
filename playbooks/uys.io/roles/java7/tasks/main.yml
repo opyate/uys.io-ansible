@@ -1,0 +1,17 @@
+---
+- name: Install Java dependencies
+  sudo: yes
+  action: $ansible_pkg_mgr pkg={{item}} state=present
+  with_items:
+    - openjdk-7-jdk
+    - openjdk-7-jre
+    - openjdk-7-jre-headless
+    - openjdk-7-jre-lib 
+
+- name: delete Java security
+  sudo: true
+  file: path=/etc/java-7-openjdk/security/java.security state=absent
+
+- name: new Java security
+  sudo: true
+  copy: src=java.security dest=/etc/java-7-openjdk/security/java.security

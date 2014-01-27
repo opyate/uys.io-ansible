@@ -1,0 +1,23 @@
+---
+- name: App server role 
+  hosts: app-server
+  user: ubuntu
+  roles:
+    - common
+    - new-relic-daemon
+    - logentries
+    - java
+    - webapp
+    - securesocial
+    - new-relic-agent
+    - play-framework
+    - webapp-config
+    - webapp-db
+
+- name: Job server role
+  hosts: job-server
+  user: ubuntu
+  roles:
+    - new-relic-agent
+    - play-framework
+    - webapp-job

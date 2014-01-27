@@ -1,0 +1,22 @@
+---
+- name: ensure the app downloads directory
+  sudo: true
+  action: file path={{installation_directory}}/downloads state=directory owner={{admin_user}} group={{admin_group}}
+
+- name: copy the webapp
+  command: creates={{installation_directory}}/downloads/{{jenkins_securesocial_package}} wget -q --auth-no-challenge --http-user={{jenkins_user}} --http-password={{jenkins_apikey}} {{jenkins_securesocial_uri}} -O {{installation_directory}}/downloads/{{jenkins_securesocial_package}}
+
+- name: ensure securesocial extraction directory
+  sudo: true
+  action: file path={{installation_directory}}/securesocial/{{jenkins_securesocial_buildnumber}} state=directory owner={{admin_user}} group={{admin_group}}
+
+- name: extract securesocial to the extraction directory
+  command: chdir={{installation_directory}} tar -xzf {{installation_directory}}/downloads/{{jenkins_securesocial_package}} --strip-components=2 -C {{installation_directory}}/securesocial/{{jenkins_securesocial_buildnumber}}
+           creates={{installation_directory}}/securesocial/{{jenkins_securesocial_buildnumber}}/conf
+
+- name: change ownership of securesocial directory
+  sudo: true
+  action: shell chown -R {{admin_user}}:{{admin_group}} {{installation_directory}}/securesocial
+
+- name: link latest securesocial build
+  file: src={{installation_directory}}/securesocial/{{jenkins_securesocial_buildnumber}} state=link path={{installation_directory}}/securesocial/latest owner={{admin_user}} group={{admin_group}}

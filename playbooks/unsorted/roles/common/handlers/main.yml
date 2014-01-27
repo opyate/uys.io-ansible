@@ -1,0 +1,7 @@
+---
+- name: restart iptables
+  action: shell /etc/init.d/iptables-persistent restart
+
+- name: restart newrelic
+  shell: /etc/init.d/newrelic-sysmond restart
+

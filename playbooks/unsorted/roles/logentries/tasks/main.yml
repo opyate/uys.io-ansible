@@ -1,0 +1,41 @@
+---
+- name: add logentries repo
+  sudo: true
+  apt_repository: repo='deb http://rep.logentries.com/ precise main' state=present
+
+- name: download the logentries key
+  shell: creates={{installation_directory}}/logentries.gpg gpg --keyserver pgp.mit.edu --recv-keys C43C79AD && gpg -a --export C43C79AD > {{installation_directory}}/logentries.gpg
+
+- name: add logentries signing key
+  sudo: true
+  apt_key: id=C43C79AD file={{installation_directory}}/logentries.gpg keyring=/etc/apt/trusted.gpg.d/logentries.gpg state=present
+
+- name: update apt cache
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Install logentries dependencies
+  sudo: yes
+  action: $ansible_pkg_mgr pkg={{item}} state=present
+  with_items:
+    - python-setproctitle
+    - logentries
+
+- name: set logentries license key
+  sudo: true
+  shell: creates={{installation_directory}}/ansible-markers/logentries le register --account-key={{logentries_license_key}} && touch {{installation_directory}}/ansible-markers/logentries || /bin/true
+
+- name: Install logentries daemon
+  sudo: yes
+  action: $ansible_pkg_mgr pkg={{item}} state=present
+  with_items:
+    - logentries-daemon
+
+- name: follow logs with logentries
+  sudo: true
+  shell: le ls hosts/{{ansible_hostname}}/{{item.key}} || le follow {{item.value}}
+  with_items: "{{logs_to_follow}}"
+
+- name: Start logentries
+  sudo: true
+  service: name=logentries state=started enabled=yes

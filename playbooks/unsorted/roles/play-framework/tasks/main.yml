@@ -1,0 +1,24 @@
+---
+
+- name: download the play framework
+  get_url: url=http://downloads.typesafe.com/play/{{play_version}}/play-{{play_version}}.zip dest={{installation_directory}}/play-{{play_version}}.zip
+
+- name: extract the play framework
+  command: chdir={{installation_directory}} unzip -q play-{{play_version}}.zip 
+           creates={{installation_directory}}/play-{{play_version}}
+ 
+- name: symlink for convenience
+  file: src={{installation_directory}}/play-{{play_version}} path={{installation_directory}}/play state=link
+
+- name: Copy the Play! framework Upstart script
+  sudo: true
+  template: src=playframework.conf.j2 dest=/etc/init/playframework.conf
+  notify: restart playframework
+
+- name: copy configurer script (used by Upstart script)
+  sudo: true
+  template: src=configurer.sh.j2 dest={{installation_directory}}/configurer.sh mode=777
+
+#- name: Start Play
+#  sudo: true
+#  service: name=playframework state=started enabled=yes

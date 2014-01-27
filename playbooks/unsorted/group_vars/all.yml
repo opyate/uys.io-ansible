@@ -1,0 +1,10 @@
+---
+# which package manager to use
+packager: apt
+
+# default installation directory for everything
+installation_directory: /opt
+
+# the name of the admin user
+admin_user: ubuntu
+admin_group: admin

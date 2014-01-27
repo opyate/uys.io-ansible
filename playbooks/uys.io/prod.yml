@@ -1,0 +1,7 @@
+---
+- hosts: app-server
+  user: ubuntu
+  roles:
+     - common
+     - java7
+     - web

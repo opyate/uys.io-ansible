@@ -1,0 +1,3 @@
+---
+- name: restart newrelic
+  shell: /etc/init.d/newrelic-sysmond restart

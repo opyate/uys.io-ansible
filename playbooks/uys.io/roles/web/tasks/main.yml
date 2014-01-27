@@ -1,0 +1,14 @@
+---
+  - include: nginx.yml
+
+  - include: static.yml
+
+  - include: websites.yml
+
+  - include: hosts.yml
+
+  - name:  Web | Removing Nginx default site configuration
+    command: rm -f /etc/nginx/sites-enabled/default
+    sudo: yes
+    tags: client
+

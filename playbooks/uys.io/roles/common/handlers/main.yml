@@ -1,0 +1,4 @@
+---
+- name: restart iptables
+  action: shell /etc/init.d/iptables-persistent restart
+

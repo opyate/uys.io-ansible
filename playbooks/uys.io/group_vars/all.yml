@@ -1,0 +1,6 @@
+---
+
+installation_directory: /opt
+
+uys001_http_port: 3000
+uys001_https_port: 3443

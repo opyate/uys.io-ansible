@@ -1,0 +1,17 @@
+---
+- name: delete app crud+secure config
+  file: path={{installation_directory}}/play1app/latest/modules/${item} state=absent
+  with_items:
+    - crud
+    - secure
+    - securesocial
+  notify: restart playframework
+
+- name: copy new app crud+secure config
+  template: src=modules.${item}.j2 dest={{installation_directory}}/play1app/latest/modules/${item}
+  with_items:
+    - crud
+    - secure
+    - securesocial
+  notify: restart playframework
+  

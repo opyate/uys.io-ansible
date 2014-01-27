@@ -1,0 +1,7 @@
+---
+- name: setup iptables rules
+  sudo: true
+  template: src=iptables.j2 dest=/etc/iptables/rules.v4  owner=root group=root mode=0644
+  notify: restart iptables
+
+

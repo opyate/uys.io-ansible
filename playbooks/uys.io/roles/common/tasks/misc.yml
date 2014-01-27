@@ -1,0 +1,4 @@
+---
+- name: Common Misc | disable updatedb
+  sudo: yes
+  shell: chmod -x /etc/cron.daily/mlocate

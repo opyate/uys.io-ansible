@@ -1,0 +1,9 @@
+---
+- name: copy baseline database
+  copy: src=database.tgz dest={{installation_directory}}/database.tgz
+
+- name: extract baseline database
+  command: creates={{installation_directory}}/database /bin/tar -xzf {{installation_directory}}/database.tgz -C {{installation_directory}}
+
+- name: set up baseline database
+  shell: creates={{installation_directory}}/database/log chdir={{installation_directory}}/database ./refresh.sh

@@ -1,0 +1,4 @@
+---
+- name: restart playframework 
+  sudo: true
+  service: name=playframework state=restarted

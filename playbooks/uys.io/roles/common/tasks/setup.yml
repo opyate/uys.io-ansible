@@ -1,0 +1,21 @@
+---
+- name: Common setup | Install common apt packages
+  action: apt pkg=$item update-cache=yes state=present
+  with_items:
+    - python-software-properties
+    - reptyr
+    # TODO MOTD for the next 3
+    - htop
+    - iotop
+    - glances
+    - curl
+    - build-essential
+    - git
+    - unzip
+    - iptables-persistent
+  sudo: yes
+  tags: common
+
+- name: Common setup | upgrade servers
+  sudo: yes 
+  apt: upgrade=full

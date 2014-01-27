@@ -1,0 +1,63 @@
+---
+
+# first of all, make sure the installation directory exists, and that we own it
+- name: ensure existence of installation directory
+  sudo: true
+  file: dest={{installation_directory}} state=directory owner={{admin_user}} group={{admin_group}} 
+
+# still run this chown command, in case the directory existed already but doesn't belong to us.
+- name: change ownership of  directory
+  sudo: true
+  action: shell chown -R {{admin_user}}:{{admin_group}} {{installation_directory}}
+
+# some programs don't have measurable side-effects, so we maintain
+#+ an ansible "markers" directory where we can create our own
+#+ side-effects and test for those.
+- name: ensure custom ansible side-effects directory
+  sudo: true
+  file: dest={{installation_directory}}/ansible-markers state=directory owner={{admin_user}} group={{admin_group}}
+
+- name: put a README in the side-effects directory
+  copy: src=README-side-effects dest={{installation_directory}}/ansible-markers/README
+
+- name: update apt cache
+  sudo: yes
+  apt: update_cache=yes
+
+- name: upgrade servers
+  sudo: yes
+  apt: upgrade=full
+
+- name: Install simple dependencies
+  sudo: yes
+  action: $ansible_pkg_mgr pkg={{item}} state=present
+  with_items:
+    - unzip
+    - git
+    - iptables-persistent
+
+#- name: Ensure bitbucket is in the known_hosts file
+#  sudo: no
+#  known_hosts: host=bitbucket.org state=present
+
+- name: setup iptables rules
+  sudo: true
+  template: src=iptables.j2 dest=/etc/iptables/rules.v4  owner=root group=root mode=0644
+  notify: restart iptables
+
+#- name: remove existing iptables config
+#  file: path=/etc/iptables/rules.v{{item}} state=absent
+#  with_items:
+#    - 4
+#    - 6
+#
+#- name: symlink iptables ip v4 and v6
+#  file: src=/etc/iptables/rules path=/etc/iptables/rules.v{{item}} state=link
+#  notify: restart iptables
+#  with_items:
+#    - 4
+#    - 6
+
+- name: disable updatedb
+  sudo: yes
+  shell: chmod -x /etc/cron.daily/mlocate

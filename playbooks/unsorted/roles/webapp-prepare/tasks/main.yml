@@ -1,0 +1,20 @@
+---
+- name: ensure the app downloads directory
+  sudo: true
+  action: file path={{installation_directory}}/downloads state=directory owner={{admin_user}} group={{admin_group}}
+
+- name: copy the webapp
+  command: creates={{installation_directory}}/downloads/{{jenkins_app_package}} wget -q --auth-no-challenge --http-user={{jenkins_user}} --http-password={{jenkins_apikey}} {{jenkins_app_uri}} -O {{installation_directory}}/downloads/{{jenkins_app_package}}
+
+- name: ensure app extraction directory
+  sudo: true
+  action: file path={{installation_directory}}/play1app/{{jenkins_app_buildnumber}} state=directory owner={{admin_user}} group={{admin_group}}
+
+- name: extract the webapp to the extraction directory
+  command: chdir={{installation_directory}} tar -xzf {{installation_directory}}/downloads/{{jenkins_app_package}} --strip-components=2 -C {{installation_directory}}/play1app/{{jenkins_app_buildnumber}}
+           creates={{installation_directory}}/play1app/{{jenkins_app_buildnumber}}/conf
+
+- name: change ownership of webapp directory
+  sudo: true
+  action: shell chown -R {{admin_user}}:{{admin_group}} {{installation_directory}}/play1app
+

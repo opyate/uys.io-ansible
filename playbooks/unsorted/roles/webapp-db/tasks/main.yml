@@ -1,0 +1,8 @@
+---
+- name: Ensure the absolute configuration path exists
+  sudo: true
+  file: dest={{app_absolute_configuration_path}} state=directory owner={{admin_user}} group={{admin_group}} 
+
+- name: copy the DB config
+  template: src=db.conf.j2 dest={{app_absolute_configuration_path}}/db.conf
+  notify: restart playframework

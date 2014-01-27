@@ -1,0 +1,10 @@
+---
+- name: Nginx | Copy static content
+  copy: src=uys.io.tgz dest={{installation_directory}}/uys.io.tgz
+  sudo: yes
+
+- name: Nginx | Extract static content
+  command: creates={{installation_directory}}/uys.io /bin/tar -xzf {{installation_directory}}/uys.io.tgz -C {{installation_directory}}
+  sudo: yes
+
+

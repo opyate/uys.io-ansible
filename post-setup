@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Source this file to have the environment variables take effect for your current session."
+
+source $(pwd)/ansible/manager/bin/activate
+
+source $(pwd)/ansible/manager/ansible/hacking/env-setup
+
+# for testing, I had the following values, but you can point them to your
+# production and qa keypairs if required.
+export MANAGER_USER=ubuntu
+export MANAGER_KEY=~/.ssh/opyate-aws-sandboxes.pem
+
+# ansible all -i ansible_hosts -m ping -u $MANAGER_USER --private-key=$MANAGER_KEY
+
+# The above command should show something like:
+# 33.33.33.30 | success >> {
+#    "changed": false,
+#    "ping": "pong"
+# }
+
+
+# Deploy app servers straight from git
+# ansible webservers -m git -a "repo=git://foo.example.org/repo.git dest=/srv/myapp version=HEAD"

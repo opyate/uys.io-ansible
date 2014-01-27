@@ -1,0 +1,5 @@
+---
+apps_common: /opt/apps
+
+uys001_repo: https://github.com/opyate/twitter-word-source 
+uys001_install_dir: {{apps_common}}/twitter-word-source

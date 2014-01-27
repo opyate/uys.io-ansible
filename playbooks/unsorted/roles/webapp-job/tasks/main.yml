@@ -1,0 +1,9 @@
+---
+- name: Ensure the absolute configuration path exists
+  sudo: true
+  file: dest={{app_absolute_configuration_path}} state=directory owner={{admin_user}} group={{admin_group}} 
+
+- name: copy the Job config
+  template: src=job.conf.j2 dest={{app_absolute_configuration_path}}/job.conf
+  notify: restart playframework
+

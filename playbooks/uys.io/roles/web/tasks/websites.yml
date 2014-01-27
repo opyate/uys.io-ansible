@@ -1,0 +1,16 @@
+---
+
+  - name:  Web | Copy Nginx configuration
+    template: src={{item.key}}.j2 dest=/etc/nginx/sites-available/{{item.key}}
+    sudo: yes 
+    tags: client
+    with_items: "{{websites}}"
+
+  - name:  Web | Enable website
+    command: ln -fs /etc/nginx/sites-available/{{item.key}} /etc/nginx/sites-enabled/{{item.key}}
+             creates=/etc/nginx/sites-enabled/{{item.key}}
+    sudo: yes
+    tags: client
+    notify: Client | Restart nginx
+    with_items: "{{websites}}"
+

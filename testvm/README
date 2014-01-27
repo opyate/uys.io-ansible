@@ -1,0 +1,9 @@
+To emulate a quick-and-dirty 'fresh' server which only has a user and a private key for said user.
+
+Create an 'ubuntu' admin user as per
+http://www.curvve.com/blog/guides/2013/how-to-create-multiple-amazon-ec2-keypair-logins-for-contractors-and-employees
+
+...then copy the private key to /vagrant which will be used by Ansible.
+
+On AWS, the PEM will be provided.
+I don't know about Azure.

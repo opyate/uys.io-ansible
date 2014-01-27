@@ -1,0 +1,8 @@
+---
+  - include: setup.yml
+
+#  - include: github.yml ssh_dir=/home/$ansible_ssh_user
+
+#  - include: iptables.yml
+
+  - include: misc.yml

@@ -1,0 +1,26 @@
+---
+
+  - include: sbt_0.12.1.yml
+
+  - name: API | Create dir
+    file: dest=$server_install_dir owner=$ansible_ssh_user group=$ansible_ssh_user mode=755 state=directory
+    sudo: yes
+    tags: api
+
+  - name: API | Checkout
+    git: repo=$server_repo dest=$server_install_dir version=master
+    register: checkout
+    tags: api
+
+  - name: API | Copy upstart script
+    action: template src=upstart.conf.j2 dest=/etc/init/rest-api.conf
+    register: upstart
+    sudo: yes
+    tags: api
+
+  - name:  API | Generate start script
+    action: command chdir=$server_install_dir sbt start-script
+    when: checkout.changed
+    tags: api
+    notify: API | Restart spray
+

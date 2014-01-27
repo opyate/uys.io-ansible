@@ -1,0 +1,3 @@
+---
+- name: copy testing script
+  template: src=ping.sh.j2 dest={{installation_directory}}/ping.sh mode=777

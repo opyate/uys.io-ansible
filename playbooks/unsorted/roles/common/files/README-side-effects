@@ -1,0 +1,3 @@
+See roles/common/tasks/main.yml for the creation of the side-effects directory.
+This directory contains empty marker files and can be removed for the associated
+commands to be run again by Ansible.

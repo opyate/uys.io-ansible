@@ -1,0 +1,13 @@
+#!/bin/bash
+# Checks for existence of extra configs in {{app_absolute_configuration_path}}
+#+ and @includes them into conf/application.conf if they don't exist.
+
+# See QSERVER-285 -- the point of this is to keep the app post-installation changes
+#+ outside of the app so that rolling upgrades need only concern them with the app.
+if [ -d {{app_absolute_configuration_path}} ] ; then
+  for CONF in $(ls {{app_absolute_configuration_path}}) ; do
+    CONF_STRING="@include.${CONF%.conf}={{app_relative_configuration_path}}/$CONF"
+    grep $CONF_STRING {{app_master_configuration_file}} || echo $CONF_STRING >> {{app_master_configuration_file}}
+  done
+fi
+

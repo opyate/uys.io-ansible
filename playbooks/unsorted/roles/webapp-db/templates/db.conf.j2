@@ -1,0 +1,5 @@
+{% if app_mode != 'dev' %}
+%{{app_mode}}.db={{app_db_url}}
+{% else %}
+db={{app_db_url}}
+{% endif %}

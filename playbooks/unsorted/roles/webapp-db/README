@@ -1,0 +1,3 @@
+This play adds extra DB configuration to the app.
+
+It adds a custom db.conf and includes it at the end of application.conf -- hopefully overriding any defaults it might have.

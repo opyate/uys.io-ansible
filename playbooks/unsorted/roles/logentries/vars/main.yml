@@ -1,0 +1,5 @@
+logs_to_follow:
+  - { key: auth.log, value: /var/log/auth.log } 
+  - { key: kern.log, value: /var/log/kern.log } 
+  - { key: application.log, value: "{{installation_directory}}/play1app/latest/logs/application.log" } 
+
