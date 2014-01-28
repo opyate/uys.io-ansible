@@ -1,12 +1,12 @@
 server {
-        listen 80;
-        server_name bookme.uys.io;
+  listen 80;
+  server_name bookme.uys.io;
 
-        root /opt/uys.io/static/webflow ;
-        index index.html index.htm;
+  root /opt/uys.io/static/webflow ;
+  index index.html index.htm;
 
-        location / {
-                try_files $uri $uri/ /index.html;
-        }
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
 }
 

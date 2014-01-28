@@ -2,3 +2,4 @@ websites:
   - { key: uys.io, desc: "uys.io main website" } 
   - { key: api.uys.io, desc: "A personal API, built with nginx + Lua" } 
   - { key: bookme.uys.io, desc: "The pro face of the whole operation, via which one can book me for work." }
+  - { key: boldface.uys.io, desc: "Twitter word source example app" } 

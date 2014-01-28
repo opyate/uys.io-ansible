@@ -18,4 +18,12 @@ if [ "x$WHICH" == "x" ] ; then
   exit 2
 fi
 
-ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  --sudo -vvv
+if [ "x$INIT" == "xdev" ] ; then
+  export MANAGER_USER=r00t
+  export MANAGER_KEY=../testvm/r00t
+else
+  export MANAGER_USER=ubuntu
+  export MANAGER_KEY=~/.ssh/opyate-aws-sandboxes.pem
+fi
+
+ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  --sudo -vvvv --extra-vars "@/home/opyate/.ansible/eyes-only.yml"

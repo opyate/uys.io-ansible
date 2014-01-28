@@ -1,6 +1,10 @@
 ---
 
-installation_directory: /opt
+stuff: /opt
+apps: "{{stuff}}/apps"
 
-uys001_http_port: 3000
-uys001_https_port: 3443
+uys_boldface_repo: https://github.com/opyate/twitter-word-source
+uys_boldface_install_dir: "{{apps}}/boldface"
+uys_boldface_description: "Twitter Word Source API"
+uys_boldface_http_port: 3000
+uys_boldface_https_port: 3443
