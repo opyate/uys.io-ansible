@@ -1,16 +1,33 @@
 ---
 
-  - name:  Web | Copy Nginx configuration
+# regular websites
+  - name:  web | copy nginx configuration for ${item.key}
     template: src={{item.key}}.j2 dest=/etc/nginx/sites-available/{{item.key}}
     sudo: yes 
     tags: client
-    with_items: "{{websites}}"
+    with_items: websites
 
-  - name:  Web | Enable website
+  - name:  web | enable website for ${item.key}
     command: ln -fs /etc/nginx/sites-available/{{item.key}} /etc/nginx/sites-enabled/{{item.key}}
              creates=/etc/nginx/sites-enabled/{{item.key}}
     sudo: yes
     tags: client
     notify: Client | Restart nginx
-    with_items: "{{websites}}"
+    with_items: websites
+
+# app sites
+
+  - name:  web | copy nginx configuration for {{item}}
+    template: src={{item}}.j2 dest=/etc/nginx/sites-available/{{item}}
+    sudo: yes 
+    tags: client
+    with_items: applist
+
+  - name:  web | enable website for {{item}}
+    command: ln -fs /etc/nginx/sites-available/{{item}} /etc/nginx/sites-enabled/{{item}}
+             creates=/etc/nginx/sites-enabled/{{item}}
+    sudo: yes
+    tags: client
+    notify: Client | Restart nginx
+    with_items: applist
 

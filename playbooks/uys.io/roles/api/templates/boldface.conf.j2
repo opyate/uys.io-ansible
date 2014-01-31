@@ -1,0 +1,9 @@
+{% extends "upstart.conf.j2" %}
+
+{% block extra_environment_variables %}
+env TWITTER_KEY="{{TWITTER_KEY}}"
+env TWITTER_SECRET="{{TWITTER_SECRET}}"
+env TWITTER_ACCESS_TOKEN="{{TWITTER_ACCESS_TOKEN}}"
+env TWITTER_ACCESS_TOKEN_SECRET="{{TWITTER_ACCESS_TOKEN_SECRET}}"
+{% endblock extra_environment_variables %}
+

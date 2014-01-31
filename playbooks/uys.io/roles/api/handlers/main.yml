@@ -1,4 +1,5 @@
 ---
-  - name: API | Restart boldface
-    action: service name=boldface state=restarted
+  - name: API | Restart {{item}}
+    action: service name={{item}} state=restarted
     sudo: yes
+    with_items: applist

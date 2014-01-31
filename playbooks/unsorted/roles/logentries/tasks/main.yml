@@ -34,7 +34,7 @@
 - name: follow logs with logentries
   sudo: true
   shell: le ls hosts/{{ansible_hostname}}/{{item.key}} || le follow {{item.value}}
-  with_items: "{{logs_to_follow}}"
+  with_items: logs_to_follow
 
 - name: Start logentries
   sudo: true

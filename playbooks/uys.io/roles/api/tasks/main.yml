@@ -2,30 +2,35 @@
 
   - include: sbt_0.13.1.yml
 
-  - name: API | Create dir
-    file: dest=$uys_boldface_install_dir owner=$ansible_ssh_user group=admin mode=755 state=directory
+  - name: API | Create app dir
+    file: dest={{appconf[item]['install_dir']}} owner={{ansible_ssh_user}} group=admin mode=755 state=directory
     sudo: yes
     tags: api
+    with_items: applist
 
-  - name: API | Checkout
-    git: repo=$uys_boldface_repo dest=$uys_boldface_install_dir version=master
+  - name: API | Checkout app 
+    git: repo={{appconf[item]['repo']}} dest={{appconf[item]['install_dir']}} version=master
     register: checkout
     tags: api
+    with_items: applist
 
   - name: API | Change ownership of checkout directory
     sudo: yes
-    action: shell chown -R $ansible_ssh_user:admin {{uys_boldface_install_dir}}
+    action: shell chown -R {{ansible_ssh_user}}:admin {{appconf[item]['install_dir']}}
+    with_items: applist
 
-  - name: API | Copy upstart script
-    action: template src=upstart.conf.j2 dest=/etc/init/boldface.conf
+  - name: API | Copy upstart script for app
+    action: template src={{item}}.conf.j2 dest=/etc/init/{{item}}.conf
     register: upstart
     sudo: yes
     tags: api
+    with_items: applist
 
-  - name:  API | Generate start script
-    action: command chdir=$uys_boldface_install_dir sbt stage
+  - name:  API | Generate start script for app
+    action: command chdir={{appconf[item]['install_dir']}} sbt stage
     when: checkout.changed
     sudo: yes
     tags: api
-    notify: API | Restart boldface
+    notify: API | Restart {{item}}
+    with_items: applist
 

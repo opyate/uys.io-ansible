@@ -3,8 +3,20 @@
 stuff: /opt
 apps: "{{stuff}}/apps"
 
-uys_boldface_repo: https://github.com/opyate/twitter-word-source
-uys_boldface_install_dir: "{{apps}}/boldface"
-uys_boldface_description: "Twitter Word Source API"
-uys_boldface_http_port: 3000
-uys_boldface_https_port: 3443
+applist: [ boldface, taximeter ]
+appconf:
+  boldface:
+    domain: boldface.uys.io
+    repo: https://github.com/opyate/twitter-word-source
+    install_dir: "{{apps}}/boldface"
+    description: "Twitter Word Source API"
+    http_port: 3000
+    https_port: 4440
+  taximeter:
+    domain: taximeter.uys.io
+    repo: https://github.com/opyate/taximeter
+    install_dir: "{{apps}}/taximeter"
+    description: "Taxi cab fare API as per TFL guidelines"
+    http_port: 3001
+    https_port: 4441
+

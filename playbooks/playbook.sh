@@ -26,4 +26,5 @@ else
   export MANAGER_KEY=~/.ssh/opyate-aws-sandboxes.pem
 fi
 
-ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  --sudo -vvvv --extra-vars "@/home/opyate/.ansible/eyes-only.yml"
+shift
+ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  --sudo -vvvv --extra-vars "@/home/opyate/.ansible/eyes-only.yml" $@

@@ -80,4 +80,5 @@ This is what we have so far...
 
 ## The list
 
-1. boldface &mdash; A Twitter Word Source app, of which more can be found here: https://github.com/opyate/twitter-word-source
+1. boldface &mdash; A Twitter Word Source app. https://github.com/opyate/twitter-word-source
+2. taximeter &mdash; Taxi cab fare API as per TFL guidelines. https://github.com/opyate/taximeter
