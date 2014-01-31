@@ -1,1 +1,1 @@
-not tested; not used (yet)
+Mostly Scala/Akka/Spray apps for now.
