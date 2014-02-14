@@ -5,6 +5,6 @@
      - common
      - java7
      - web
-     - api
      - linkbaiter
+     - api
      - soapbox

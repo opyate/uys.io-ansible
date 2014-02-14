@@ -5,6 +5,7 @@
     - python-software-properties
     - python-pip
     - python-dev
+    - python-mysqldb
     - libxml2-dev
     - libxslt1-dev
     - libmysqlclient-dev
