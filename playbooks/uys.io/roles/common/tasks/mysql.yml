@@ -1,0 +1,34 @@
+---
+# 'localhost' needs to be the last item for idempotency, see
+# http://ansible.cc/docs/modules.html#mysql-user
+- name: MySQL | update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password={{ mysql_root_password }} priv=*.*:ALL,GRANT
+  sudo: yes
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: MySQL | copy .my.cnf file with root password credentials for root
+  sudo: yes
+  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+
+#- name: MySQL | copy .my.cnf file with root password credentials for the user
+#  sudo: yes
+#  template: src=my.cnf.j2 dest=/home/{{ansible_ssh_user}}/.my.cnf owner={{ansible_ssh_user}} mode=0600
+
+# Turns out I don't need the below. I stupidly ran the webapp with the Postgres driver
+#+ against its MySQL database with "import scala.slick.driver.PostgresDriver.simple._"
+- name: MySQL | ANSI mode
+  sudo: yes
+  lineinfile: dest=/etc/mysql/my.cnf
+    insertafter='^\[mysqld]'
+    line='sql-mode=ANSI'
+    state=present
+
+- name: MySQL | Start the MySQL service
+  sudo: yes
+  action: service name=mysql state=started
+
+

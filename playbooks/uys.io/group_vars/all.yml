@@ -3,7 +3,8 @@
 stuff: /opt
 apps: "{{stuff}}/apps"
 
-applist: [ boldface, taximeter ]
+# spray apps
+applist: [ boldface, taximeter, beingjohnmarkovic, plusonenews ]
 appconf:
   boldface:
     domain: boldface.uys.io
@@ -12,6 +13,7 @@ appconf:
     description: "Twitter Word Source API"
     http_port: 3000
     https_port: 4440
+    active: False
   taximeter:
     domain: taximeter.uys.io
     repo: https://github.com/opyate/taximeter
@@ -19,4 +21,23 @@ appconf:
     description: "Taxi cab fare API as per TFL guidelines"
     http_port: 3001
     https_port: 4441
+    active: False
+  beingjohnmarkovic:
+    domain: markov.uys.io
+    repo: https://github.com/opyate/beingjohnmarkovic
+    install_dir: "{{apps}}/beingjohnmarkovic"
+    description: "Markov chain thingy"
+    http_port: 3002
+    https_port: 4442
+    db_name: markovic
+    active: True
+  plusonenews:
+    domain: plus1.uys.io
+    repo: https://github.com/opyate/plusonenews
+    install_dir: "{{apps}}/plusonenews"
+    description: "Linkbait -> increment -> NLG -> publish -> profit."
+    http_port: 3003
+    https_port: 4443
+    db_name: "{{linkbaiter_db_name}}"
+    active: True
 

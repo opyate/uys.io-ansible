@@ -1,0 +1,4 @@
+---
+  - name: Soapbox | Restart soapbox
+    action: service name=soapbox state=restarted
+    sudo: yes

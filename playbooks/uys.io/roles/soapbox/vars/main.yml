@@ -1,0 +1,7 @@
+---
+# custom apps
+soapbox_repo: https://github.com/opyate/soapbox
+soapbox_install_dir: "{{apps}}/soapbox"
+soapbox_port: 5000
+
+

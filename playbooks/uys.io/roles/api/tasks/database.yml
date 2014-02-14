@@ -1,0 +1,22 @@
+---
+# Not all, but a couple of apps have MySQL db dependencies.
+# Plusonenews uses the linkbaiter DB
+
+  - name: Plusonenews | create database
+    mysql_db: name={{ appconf['plusonenews']['db_name'] }} state=present
+    tags: plusonenews
+
+  - name: Plusonenews | Import database schema
+    sudo: yes
+    mysql_db: name={{ appconf['plusonenews']['db_name'] }} state=import login_host=127.0.0.1 target={{linkbaiter_install_dir}}/schema.sql 
+    tags: plusonenews
+
+
+  - name: Beingjohnmarkovic | create database
+    mysql_db: name={{ appconf['beingjohnmarkovic']['db_name'] }} state=present
+    tags: beingjohnmarkovic
+
+  - name: Beingjohnmarkovic | Import database schema
+    sudo: yes
+    mysql_db: name={{ appconf['beingjohnmarkovic']['db_name'] }} state=import login_host=127.0.0.1 target={{appconf['beingjohnmarkovic']['install_dir'] }}/src/main/resources/schema.sql 
+    tags: beingjohnmarkovic

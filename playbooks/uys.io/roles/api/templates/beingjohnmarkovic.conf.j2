@@ -1,0 +1,10 @@
+{% extends "upstart.conf.j2" %}
+
+{% block extra_environment_variables %}
+env MYSQL_HOST="{{PLUSONENEWS_MYSQL_HOST}}"
+env MYSQL_DBNAME="markovic"
+env MYSQL_USER="{{PLUSONENEWS_MYSQL_USER}}"
+env MYSQL_PASSWD="{{PLUSONENEWS_MYSQL_PASSWD}}"
+env MYSQL_PORT={{PLUSONENEWS_MYSQL_PORT}}
+{% endblock extra_environment_variables %}
+

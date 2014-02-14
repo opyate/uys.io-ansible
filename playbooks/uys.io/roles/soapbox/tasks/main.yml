@@ -1,0 +1,32 @@
+---
+  - name: Soapbox | Create app dir
+    file: dest={{soapbox_install_dir}} owner={{ansible_ssh_user}} group=admin mode=755 state=directory
+    sudo: yes
+    tags: soapbox
+
+  - name: Soapbox | Checkout app 
+    git: repo={{soapbox_repo}} dest={{soapbox_install_dir}} version=master
+    register: checkout
+    tags: soapbox
+
+  - name: Soapbox | Change ownership of checkout directory
+    sudo: yes
+    action: shell chown -R {{ansible_ssh_user}}:admin {{soapbox_install_dir}}
+    tags: soapbox
+
+  # yeah, yeah, I know I should be using requirements.txt
+  - name: Soapbox | python dependencies
+    sudo: yes
+    pip: name={{item}} state=latest use_mirrors=no
+    with_items:
+      - Flask
+      - requests
+      - gunicorn
+    tags: soapbox
+
+  - name: Soapbox | Copy upstart script
+    sudo: yes
+    tags: soapbox
+    template: src=upstart.conf.j2 dest=/etc/init/soapbox.conf
+    register: upstart
+    notify: Soapbox | Restart soapbox

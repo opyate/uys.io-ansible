@@ -6,3 +6,5 @@
 #  - include: iptables.yml
 
   - include: misc.yml
+
+  - include: mysql.yml

@@ -1,5 +1,5 @@
 server {
-  server_name {{item}}.uys.io;
+  server_name {{appconf[item]['domain']}};
 
   location / {
     proxy_pass http://localhost:{{appconf[item]['http_port']}} ;

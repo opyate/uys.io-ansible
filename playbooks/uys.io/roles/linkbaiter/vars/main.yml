@@ -1,0 +1,7 @@
+---
+# custom apps
+linkbaiter_repo: https://github.com/opyate/linkbaiter
+linkbaiter_install_dir: "{{apps}}/linkbaiter"
+linkbaiter_db_name: "linkbaiter"
+
+

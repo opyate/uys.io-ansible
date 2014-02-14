@@ -3,6 +3,12 @@
   action: apt pkg=$item update-cache=yes state=present
   with_items:
     - python-software-properties
+    - python-pip
+    - python-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libmysqlclient-dev
+    - libssl-dev
     - reptyr
     # TODO MOTD for the next 3
     - htop
@@ -14,6 +20,7 @@
     - unzip
     - iptables-persistent
     - redis-server
+    - mysql-server
   sudo: yes
   tags: common
 

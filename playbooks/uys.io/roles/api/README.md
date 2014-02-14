@@ -1,1 +1,1 @@
-Mostly Scala/Akka/Spray apps for now.
+Mostly Scala/Spray/Akka apps with a Redis DB.

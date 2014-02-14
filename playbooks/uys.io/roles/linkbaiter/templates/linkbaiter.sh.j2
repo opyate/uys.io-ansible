@@ -1,0 +1,12 @@
+#!/bin/bash
+LOC=/tmp/linkbaiter
+mkdir -p $LOC
+cd {{linkbaiter_install_dir}}
+for spider in bi bf ; do
+  OUTPUT="$LOC/$spider.$(date +'%s.%N').json"
+  PLUSONENEWS_MYSQL_HOST="{{PLUSONENEWS_MYSQL_HOST}}" \
+  PLUSONENEWS_MYSQL_DBNAME="{{linkbaiter_db_name}}" \
+  PLUSONENEWS_MYSQL_USER="{{PLUSONENEWS_MYSQL_USER}}" \
+  PLUSONENEWS_MYSQL_PASSWD="{{PLUSONENEWS_MYSQL_PASSWD}}" \
+  scrapy crawl $spider -o $OUTPUT -t json
+done
