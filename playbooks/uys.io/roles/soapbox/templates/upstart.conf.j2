@@ -1,7 +1,12 @@
 description "App server for SOAPBOX"                                                                                                                                 
 start on runlevel [2345]
 stop on runlevel [!2345]
- 
+
+env MAILGUN_KEY="{{MAILGUN_KEY}}"
+env MAILGUN_HOST="{{MAILGUN_HOST}}"
+env MAILGUN_FROM="{{MAILGUN_FROM}}"
+env TUMBLR_EMAIL="{{TUMBLR_EMAIL}}"
+
 respawn
  
 script
