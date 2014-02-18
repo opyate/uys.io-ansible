@@ -2,9 +2,14 @@
 - name: Nginx | Copy static content
   copy: src=uys.io.tgz dest={{stuff}}/uys.io.tgz
   sudo: yes
+  register: newstatic
+  tags: static
 
 - name: Nginx | Extract static content
-  command: creates={{stuff}}/uys.io /bin/tar -xzf {{stuff}}/uys.io.tgz -C {{stuff}}
+  command: /bin/tar -xzf {{stuff}}/uys.io.tgz -C {{stuff}}
   sudo: yes
+  when: newstatic|changed
+  notify: Client | Restart nginx
+  tags: static
 
 
