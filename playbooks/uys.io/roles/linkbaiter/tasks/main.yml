@@ -16,10 +16,10 @@
 
   - name: Linkbaiter | python dependencies
     sudo: yes
-    pip: name={{item}} state=latest use_mirrors=no
+    pip: name={{item.key}} state=present version={{item.version}} use_mirrors=no
     with_items:
-      - MySQL-python
-      - scrapy
+      - { key: MySQL-python, version: 1.2.5 }
+      - { key: scrapy, version: 0.22.2 }
     tags: linkbaiter
 
   - name: Linkbaiter | create database

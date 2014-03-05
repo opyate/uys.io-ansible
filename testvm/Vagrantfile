@@ -9,6 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set virtual machine memory size
   config.vm.provider :virtualbox do |vbox|
     vbox.customize ["modifyvm", :id, "--memory", 1024]
+    vbox.name = "uysio_test_vm"
   end
   config.vm.network :private_network, ip: "33.33.33.60"
   config.vm.provision "shell", path: "init.sh"

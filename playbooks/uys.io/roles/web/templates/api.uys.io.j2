@@ -19,6 +19,7 @@ server {
         location /_ {
                 # TODO proxy to API /_ here.
                 proxy_pass http://127.0.0.1:$server_port/ ;
+                proxy_set_header Host $http_host;
 
                 header_filter_by_lua '
                         if ngx.header.content_encoding == "gzip" then

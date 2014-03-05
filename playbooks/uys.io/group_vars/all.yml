@@ -30,7 +30,7 @@ appconf:
     http_port: 3002
     https_port: 4442
     db_name: markovic
-    active: True
+    active: False
   plusonenews:
     domain: plus1.uys.io
     repo: https://github.com/opyate/plusonenews
@@ -39,5 +39,5 @@ appconf:
     http_port: 3003
     https_port: 4443
     db_name: "{{linkbaiter_db_name}}"
-    active: True
+    active: False
 

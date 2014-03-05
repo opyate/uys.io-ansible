@@ -12,4 +12,26 @@
   notify: Client | Restart nginx
   tags: static
 
+# wedding.uys.io
+
+- name: Nginx | ensure wedding site exists
+  file: dest=/opt/wedding.uys.io state=directory
+  sudo: yes
+
+- name: Nginx | Copy static content for wedding
+  copy: src=the-wedding.webflow.zip dest=/opt/wedding.uys.io/the-wedding.webflow.zip
+  sudo: yes
+  register: weddingstatic
+  tags: static
+
+- name: Nginx | Extract static content for wedding
+  command: chdir=/opt/wedding.uys.io/ /bin/unzip -o the-wedding.webflow.zip
+  sudo: yes
+  when: weddingstatic|changed
+  notify: Client | Restart nginx
+  tags: static
+
+
+
+
 

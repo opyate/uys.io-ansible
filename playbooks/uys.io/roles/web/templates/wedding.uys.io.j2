@@ -1,0 +1,38 @@
+# lua_package_cpath '/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;;';
+
+
+server {
+        listen 80;
+        server_name wedding.uys.io;
+
+        location /thisiswherethefunstarts {
+    alias /opt/wedding.uys.io/;
+
+        }
+
+        location / {
+                default_type text/html; 
+                if ($request_method = GET ) {
+                    return 200 "<html><head><style type='text/css'>body {text-align: center;font-size: 1.5em;color:#6a6a6a; }</style></head><body><form style='padding-top: 100px;' action='http://wedding.uys.io' method='POST'>The password as per the invitation: <input name='password' id='password'><input type='submit'></form><script>document.getElementById('password').focus();</script></body></html>";
+                }
+
+
+                if ($request_method = POST) {
+                  content_by_lua '
+                      ngx.req.read_body()
+                      local args, err = ngx.req.get_post_args(1)
+                      if not args then
+                          ngx.say("Perhaps ask our dear to-be-hitched for the password.")
+                          return
+                      end
+          if args["password"] == "annabelle" then
+
+                        ngx.redirect("/thisiswherethefunstarts")
+                else
+                        ngx.say("Perhaps ask our dear to-be-hitched for the password.")
+                      end
+                  ';
+                }
+        }
+
+}

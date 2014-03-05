@@ -1,0 +1,1 @@
+ssh -o ConnectTimeout=1 -i r00t  r00t@33.33.33.60
