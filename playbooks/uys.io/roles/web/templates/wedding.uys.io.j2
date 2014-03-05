@@ -5,7 +5,7 @@ server {
         listen 80;
         server_name wedding.uys.io;
 
-        location /thisiswherethefunstarts {
+        location /index {
     alias /opt/wedding.uys.io/;
 
         }
@@ -27,7 +27,7 @@ server {
                       end
           if args["password"] == "annabelle" then
 
-                        ngx.redirect("/thisiswherethefunstarts")
+                        ngx.redirect("/index")
                 else
                         ngx.say("Perhaps ask our dear to-be-hitched for the password.")
                       end
