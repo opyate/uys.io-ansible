@@ -1,2 +1,4 @@
 [app-server]
 ec2-54-195-240-148.eu-west-1.compute.amazonaws.com
+#ec2-54-195-13-107.eu-west-1.compute.amazonaws.com
+#ec2-54-195-240-148.eu-west-1.compute.amazonaws.com

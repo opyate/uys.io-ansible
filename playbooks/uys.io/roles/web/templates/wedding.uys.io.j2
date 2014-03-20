@@ -25,7 +25,7 @@ server {
                           ngx.say("Perhaps ask our dear to-be-hitched for the password.")
                           return
                       end
-          if args["password"] == "annabelle" then
+          if string.lower(args["password"]) == "annabelle" then
 
                         ngx.redirect("/index")
                 else
