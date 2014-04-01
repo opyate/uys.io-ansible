@@ -27,4 +27,4 @@ else
 fi
 
 shift
-ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  --sudo -vvvv --extra-vars "@/home/opyate/.ansible/eyes-only.yml" $@
+ansible-playbook $WHICH/${INIT}.yml -i ${INIT}_hosts -u $MANAGER_USER --private-key=$MANAGER_KEY  -vvvv --extra-vars "@/home/opyate/.ansible/eyes-only.yml" $@
