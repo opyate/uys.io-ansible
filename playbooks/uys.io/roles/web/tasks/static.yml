@@ -1,14 +1,7 @@
 ---
 - name: Nginx | Copy static content
-  copy: src=uys.io.tgz dest={{stuff}}/uys.io.tgz
+  git: repo=https://github.com/opyate/uys.io dest={{stuff}}/uys.io/static version=master
   sudo: yes
-  register: newstatic
-  tags: static
-
-- name: Nginx | Extract static content
-  command: /bin/tar -xzf {{stuff}}/uys.io.tgz -C {{stuff}}
-  sudo: yes
-  when: newstatic|changed
   notify: Client | Restart nginx
   tags: static
 
@@ -19,19 +12,8 @@
   sudo: yes
 
 - name: Nginx | Copy static content for wedding
-  copy: src=the-wedding.webflow.zip dest=/opt/wedding.uys.io/the-wedding.webflow.zip
+  git: repo=https://github.com/opyate/wedding-website dest=/opt/wedding.uys.io version=master
   sudo: yes
-  register: weddingstatic
-  tags: static
-
-- name: Nginx | Extract static content for wedding
-  command: chdir=/opt/wedding.uys.io/ /bin/unzip -o the-wedding.webflow.zip
-  sudo: yes
-  when: weddingstatic|changed
   notify: Client | Restart nginx
   tags: static
-
-
-
-
 
