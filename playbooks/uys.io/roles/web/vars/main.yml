@@ -1,7 +1,0 @@
-websites:
-  - { key: uys.io, desc: "uys.io main website" } 
-  - { key: api.uys.io, desc: "A personal API, built with nginx + Lua" } 
-  - { key: bookme.uys.io, desc: "The pro face of the whole operation, via which one can book me for work." }
-  - { key: port8000.uys.io, desc: "Not always open..." }
-  - { key: wedding.uys.io, desc: "Nothing to see here. Move on, please." } 
-
