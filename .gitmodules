@@ -1,0 +1,3 @@
+[submodule "playbooks/uys.io"]
+	path = playbooks/uys.io
+	url = git@github.com:opyate/uys.io-playbook.git
