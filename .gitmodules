@@ -1,3 +1,6 @@
 [submodule "playbooks/uys.io"]
 	path = playbooks/uys.io
 	url = git@github.com:opyate/uys.io-playbook.git
+[submodule "ansible/manager/ansible"]
+	path = ansible/manager/ansible
+	url = git://github.com/ansible/ansible.git
