@@ -1,4 +1,8 @@
 #!/bin/bash
+
+git submodule init
+git submodule update
+
 # This sets up a small virtual python installation with which to manage Ansible boxes.
 
 sudo apt-get install python-dev
