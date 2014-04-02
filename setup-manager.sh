@@ -16,8 +16,6 @@ yolk -l
 
 # should output only 6 packages: Python, argparse, distribute, pip, wsgiref, yolk
 
-git clone git://github.com/ansible/ansible.git
-# ansible will be sourced in post-setup.sh
 
 # grab the 3rd party 'known hosts' library
 git clone https://github.com/brycebaril/ansible-known_hosts.git library/ansible-known_hosts
